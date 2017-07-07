@@ -1,0 +1,33 @@
+[global]
+   workgroup = WORKGROUP
+   server string = Samba Share
+   hosts allow = 192.168.0. 192.168.1. 127.
+   guest account = nobody
+   log file = /var/log/samba/%m.log
+   max log size = 1000
+   security = user
+   map to guest = Bad User   
+   interfaces = lo eth0 wlan0
+   bind interfaces only = true
+   dns proxy = no 
+   public = yes
+   
+   #Speed & security settings
+   socket options = TCP_NODELAY IPTOS_LOWDELAY SO_RCVBUF=65536 SO_SNDBUF=65536
+   deadtime = 15
+   disable netbios = yes
+   encrypt passwords = true
+   invalid users = root
+   max connections = 10
+   strict sync = no
+   sync always = no
+   syslog = 1
+   syslog only = yes
+
+[HD3TB]
+   comment = Home Share
+   path = /mnt/HD3TB
+   read only = no
+   writeable = yes
+   guest ok = yes
+   browseable = yes

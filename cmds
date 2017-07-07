@@ -1,0 +1,23 @@
+SSH
+
++Create SSH keypair
+	ssh-keygen
++add password
+	ssh-keygen -p
++put public key onto server (for passwordless login)
+	ssh-copy-id -i <publickey> <user>@<server>
+
+SOUND&MICRO
+
++starts soundcapture if above certain level & stops at silence ["hw:1,0": input device]
+	sox -t alsa hw:1,0 test.wav silence 1 0 0.5% -1 1.0 1%
++link for tts
+	http://translate.google.com/translate_tts?tl=en&q=$1
+
+PERMISSIONS
+
++sets permissions to 755 for directories
+	find . -type d -exec chmod 755 {} \;
++sets permissions to 644 for files
+	find . -type f -exec chmod 644 {} \;
+

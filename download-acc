@@ -1,0 +1,21 @@
+#!/bin/bash
+
+LINK=$1
+
+`curl -I $LINK > /tmp/header`
+LENGTH=`cat /tmp/header | grep Content-Length: | sed 's/[^0-9]*//g'`
+FILENAME=`cat /tmp/header | grep filename | cut -d '=' -f2 | tr -d '"' | tr -d '\r'`
+PARTSIZE=$(( 5 * 1024 * 1024 ))
+PARTS=$(( $LENGTH / $PARTSIZE ))
+LOGSFOLDER="/tmp/$FILENAME-logs"
+PARTSFOLDER="/tmp/$FILENAME-parts"
+
+`mkdir "$LOGSFOLDER" "$PARTSFOLDER"`
+
+for ((PART=0; PART<=$PARTS; PART++))
+do
+	START=$(($PART*$PARTSIZE))
+	END=$(((($PART+1))*$PARTSIZE))
+
+	`curl -L -r "$START-$END" -o "$PARTSFOLDER/$FILENAME.part$PART" "$LINK" > "$LOGSFOLDER/$PART.log" 2>&1 &`
+done
