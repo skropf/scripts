@@ -3,12 +3,12 @@
 #find . -type d -exec mkdir -p ../music_test/{} \;
 
 IFS=$'\n';
-LIST=$(find . -name *.mp3)
+LIST=$(find .)
 
 for file in $LIST
 do
-	name=${file:2:${#file}-6}
+	name=${file%-*}
 	#mv $name.mp3 $name.aac
 	echo -e $name
-	#ffmpeg -i $name.flac -strict -2 -n ../music_test/$name.aac
+	ffmpeg -i $file -b:a 192k converted/$name.mp3
 done

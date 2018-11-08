@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for i in $(seq 0 255); do for j in $(seq 0 255); do echo -e 86.$i.$j.139 >> toping; done; done
+fping -c1 -t300 -ftoping > pinged 2> err.log
+#cat pinged | cut -d' ' -f1 | xargs -I {} nmap -Pn -p51820 {} | tee openssh
+# use ncat instead of nmap...
+
